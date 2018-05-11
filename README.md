@@ -5,8 +5,11 @@ Test driven development:
 
 
 func setUp() {} before every test in class.
+
 func tearDown() {} after every test in class.
+
 func testExample() {} normal test.
+
 func testPerformanceExample() {} test the performance. Code inside of self.measure closure runs 10 times to calculate performance.
 
 Test code should be fail at first time, to check is our test works or not.
