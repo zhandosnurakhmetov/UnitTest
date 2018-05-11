@@ -1,15 +1,14 @@
 //
-//  TodoListTests.swift
+//  APIClientTests.swift
 //  TodoListTests
 //
-//  Created by user on 03.05.2018.
+//  Created by user on 11.05.2018.
 //  Copyright © 2018 ChocoFamily. All rights reserved.
 //
 
 import XCTest
-@testable import TodoList
 
-class TodoListTests: XCTestCase {
+class APIClientTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
