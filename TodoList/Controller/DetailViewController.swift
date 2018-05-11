@@ -7,29 +7,52 @@
 //
 
 import UIKit
+import MapKit
 
 class DetailViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+  
+  @IBOutlet weak var titleLabel: UILabel!
+  @IBOutlet weak var mapView: MKMapView!
+  @IBOutlet weak var dateLabel: UILabel!
+  @IBOutlet weak var locationLabel: UILabel!
+  @IBOutlet weak var descriptionLabel: UILabel!
+  
+  var itemInfo: (ItemManager, Int)?
+  
+  let dateFormatter: DateFormatter = {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "MM/dd/yyyy"
+    return dateFormatter
+  }()
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    guard let itemInfo = itemInfo else { return }
+    let item = itemInfo.0.item(at: itemInfo.1)
+    
+    titleLabel.text = item.title
+    locationLabel.text = item.location?.name
+    descriptionLabel.text = item.itemDescription
+    
+    if let timestamp = item.timestamp {
+      let date = Date(timeIntervalSince1970: timestamp)
+      dateLabel.text = dateFormatter.string(from: date)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    if let coordinate = item.location?.coordinate {
+      let region = MKCoordinateRegionMakeWithDistance(coordinate, 100, 100)
+      mapView.region = region
     }
-    */
-
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+  
+  func checkItem() {
+    if let infoItem = itemInfo {
+      infoItem.0.checkItem(at: infoItem.1)
+    }
+  }
+  
 }
